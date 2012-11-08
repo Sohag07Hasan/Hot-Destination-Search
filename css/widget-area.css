@@ -1,6 +1,15 @@
 .hotgallery-hotsearch{
 	background-color: #fff;	
 	float: right;
-	margin-top: -300px;
+	margin-top: -310px;
 	padding: 10px;	
+}
+
+.hotgallery-hotsearch select{
+	background: transparent;
+    width: 268px;
+    padding: 5px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    height: 30px;
 }

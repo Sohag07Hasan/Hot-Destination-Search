@@ -44,6 +44,7 @@ class widget_hot_search extends WP_Widget{
 					<td> 
 						<select name="name1">
 							<option> Demo Option</option>
+							<option> Demo Option</option>
 						</select>
 					</td>
 				</tr>
@@ -52,6 +53,7 @@ class widget_hot_search extends WP_Widget{
 					<td> 
 						<select name="name2">
 							<option> Demo Option </option>
+							<option> Demo Option</option>
 						</select>
 					</td>
 				</tr>
@@ -60,6 +62,7 @@ class widget_hot_search extends WP_Widget{
 					<td> 
 						<select name="name3">
 							<option> Demo Option </option>
+							<option> Demo Option</option>
 						</select>
 					</td>
 				</tr>
