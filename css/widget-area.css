@@ -2,7 +2,9 @@
 	background-color: #fff;	
 	float: right;
 	margin-top: -310px;
-	padding: 10px;	
+	padding: 10px;
+	height: 290px;
+	overflow: hidden;
 }
 
 .hotgallery-hotsearch select{
@@ -12,4 +14,13 @@
     font-size: 13px;
     border: 1px solid #ccc;
     height: 30px;
+}
+
+.submit-button{
+	padding: 2px;
+}
+
+.submit-button:hover{
+	padding: 4px;
+	cursor: pointer;
 }

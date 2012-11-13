@@ -39,41 +39,38 @@ class widget_hot_search extends WP_Widget{
 ?>
 		<form action='' method="get">
 			
-			<table>				
-				<tr>
-					<td> 
-						<select name="name1">
-							<option> Demo Option</option>
-							<option> Demo Option</option>
-						</select>
-					</td>
-				</tr>
-				
-				<tr>
-					<td> 
-						<select name="name2">
-							<option> Demo Option </option>
-							<option> Demo Option</option>
-						</select>
-					</td>
-				</tr>
-				
-				<tr>
-					<td> 
-						<select name="name3">
-							<option> Demo Option </option>
-							<option> Demo Option</option>
-						</select>
-					</td>
-				</tr>
-				
-				<tr>
-					<td> 
-						<input type="submit" value="Search" />
-					</td>
-				</tr>
-				
+			<table>	
 			
+				<?php 
+					foreach(hot_wp_search::$taxonomies as $slug => $taxonomy){
+						$terms = get_terms($slug, array('orderby' => 'name'));
+						?>
+							<tr>
+								<td>
+									<select name="<?php echo $slug; ?>">
+										<option value=''> - Select <?php echo $taxonomy['s']; ?> - </option>
+										<?php 
+											if($terms){
+												foreach($terms as $term){
+												?>
+													<option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>	
+												<?php 
+												}
+											}
+										?>
+									</select>
+								</td>
+							</tr>
+						<?php 
+					}
+				?>
+				
+				<tr>
+					<td>
+						<input class="button submit-button" type="submit" value="Search" />
+					</td>
+				</tr>
+				
 			</table>
 		</form>
 <?php 
