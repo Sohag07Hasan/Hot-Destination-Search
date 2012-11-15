@@ -48,6 +48,11 @@ class hot_wp_search{
 		
 		//register the custom taxonomies
 		add_action('init', array(get_class(), 'register_search_taxonomies'));
+		
+		//add custom templates
+		add_filter('template_include', array(get_class(), 'include_new_template'));
+		
+		add_filter('wp_title', array(get_class(), 'filter_the_title'), 10, 3);
 	}
 	
 	//register a new widget area to accommodate the search widget
@@ -121,7 +126,81 @@ class hot_wp_search{
 			    'rewrite' => true,
  			);
  			
- 			register_taxonomy($key, array('post'), $args);
+ 			register_taxonomy($key, array('post', 'page'), $args);
 		}
 	}
+	
+	
+	
+	/*
+	 Include a new Template to show the search results
+	 */
+	static function include_new_template($template){
+		
+		if(strstr($_SERVER["REQUEST_URI"], 'query-results') && isset($_GET['pt'])){
+			$template = self::get_query_resulsts_template();
+		}
+		
+		return $template;
+	}
+	
+	
+	//returns the query results templates
+	static function get_query_resulsts_template(){
+		return HOTWPSEARCH_DIR . '/templates/query-results.php';
+	}
+	
+	
+	//filter the title
+	static function filter_the_title($title, $separation, $seplocation){
+	if(strstr($_SERVER["REQUEST_URI"], 'query-results') && isset($_GET['pt'])){
+			$title = 'Search results with multiple taxonomies';
+		}
+		return $title;
+	}
+	
+	
+	
+	/*
+	 * return the queries
+	 * */
+	static function get_serach_posts_or_page(){
+		
+		switch ($_GET['pt']){
+			case 1 :
+				$post_type = 'page';
+				break;
+			case 2 :
+				$post_type = 'post';
+				break;
+			default: 
+				$post_type = array('post', 'page');
+				break;
+		}
+		
+		$tax_query = array();
+		foreach(self::$taxonomies as $slug => $taxonomy){
+			if(!empty($_GET[$slug]) && strlen($_GET[$slug]>0)){
+				$tax_query[] = array(
+					'taxonomy' => $slug,
+					'field' => id,
+					'terms' => array($_GET[$slug])
+				);
+			}
+		}
+		
+		$args = array(
+			'post_type' => $post_type,
+			'tax_query' => $tax_query
+		);
+
+		$args['tax_query']['relation'] = 'AND';
+		
+		//var_dump($args);
+		
+		return new WP_Query($args);
+		
+	}
+	
+	
 }
