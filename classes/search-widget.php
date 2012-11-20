@@ -61,7 +61,7 @@ class widget_hot_search extends WP_Widget{
 							<tr>
 								<td>
 									<select name="<?php echo $slug; ?>">
-										<option value=''> - Select <?php echo $taxonomy['s']; ?> - </option>
+										<option value=''> - Select <?php echo ($taxonomy['s'] == 'Lake') ? 'Water' : $taxonomy['s']; ?> - </option>
 										<?php 
 											if($terms){
 												foreach($terms as $term){
